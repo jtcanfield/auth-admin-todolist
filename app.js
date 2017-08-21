@@ -21,6 +21,9 @@ app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, htt
 const loginRouter = require ("./routes/login");//Requires a file
 app.use("/login", loginRouter);//assigns the required file to a route
 
+const signupRouter = require ("./routes/signup");//Requires a file
+app.use("/signup", signupRouter);//assigns the required file to a route
+
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 app.set('views', './views');
@@ -71,7 +74,11 @@ app.post("/logout", function (req, res) {
   res.redirect('/');
 });
 
-
+app.post("/signuppageredirect", function (req, res) {
+  authSession = "";
+  req.login = undefined;
+  res.redirect('/signup');
+});
 
 //This is the initial rendering, saying to use index.mustache, and declares todosMustache
 app.get("/", function (req, res) {
