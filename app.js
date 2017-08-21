@@ -35,6 +35,7 @@ app.use(bodyParser.text());
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
+  console.log(req);
   console.log(req.session);
   console.log(req.sessionID);
   var usernamething = req.body.username;
@@ -50,7 +51,7 @@ app.post("/login", function (req, res) {
 
 app.post("/logout", function (req, res) {
   authSession = "";
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 
@@ -61,12 +62,9 @@ app.get("/", function (req, res) {
     res.redirect('/login');
     return
   } else {
-    console.log(authSession);
-    console.log(req.session);
-    console.log(req.sessionID);
   }
   //fs.readFile reads the data.json file
-  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
@@ -86,19 +84,16 @@ app.post("/", function (req, res) {
     res.redirect('/login');
     return
   } else {
-    console.log(authSession);
-    console.log(req.session);
-    console.log(req.sessionID);
   }
   var addtolist = req.body.inputtodo; //Gets the text in the input tag with name ="inputtodo"
-  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
       obj = JSON.parse(data); //now its an object
       obj.todoArray.push(addtolist); //pushes the text to an array
       json = JSON.stringify(obj); //converts back to json
-      fs.writeFile('data.json', json, 'utf8'); // writes to file
+      fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
   }});
   res.redirect('/');//reloads page
 });
@@ -110,10 +105,8 @@ app.post("/complete:dynamic", function (req, res) {
     res.redirect('/login');
     return
   } else {
-    console.log(req.session);
-    console.log(req.sessionID);
   }
-  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
@@ -129,7 +122,7 @@ app.post("/complete:dynamic", function (req, res) {
           }
         }
       json = JSON.stringify(obj); //converts back to json
-      fs.writeFile('data.json', json, 'utf8'); // writes to file
+      fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
   }});
   res.redirect('/');//reloads page
 });
