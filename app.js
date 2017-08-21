@@ -5,9 +5,17 @@ const bodyParser = require('body-parser');
 const app = express();
 const file = './data.json';
 const fs = require('fs');
+var authSession = "";
+
+
+
+
 const session = require('express-session');
+app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}}));
 
 
+
+// console.log();
 const loginRouter = require ("./routes/login");//Requires a file
 app.use("/login", loginRouter);//assigns the required file to a route
 
@@ -22,8 +30,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 
 
+
+//LOGIN PAGE BELOW
+app.post("/login", function (req, res) {
+  console.log(req.session);
+  console.log(req.sessionID);
+  var usernamething = req.body.username;
+  const UserFile = require("./users.js");//This requires another file
+  UserFile.find(usernamething);//this uses that other file's ".find"
+  if (UserFile.find(usernamething) === undefined){
+    res.redirect('/login');//reloads page
+  } else if (UserFile.find(usernamething) !== undefined){
+    // var authed = req.sessionID
+    authSession = true;
+    res.redirect('/');//reloads page
+  }
+});
+
+
+
+
+
 //This is the initial rendering, saying to use index.mustache, and declares todosMustache
 app.get("/", function (req, res) {
+  if (authSession === ""){
+    res.redirect('/login');
+    return
+  } else {
+    console.log(req.session);
+    console.log(req.sessionID);
+  }
   //fs.readFile reads the data.json file
   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
       if (err){
@@ -41,6 +77,13 @@ app.get("/", function (req, res) {
 
 //This means that every time method="post" is called on action="/", it will add to the array and redirect the user
 app.post("/", function (req, res) {
+  if (authSession === ""){
+    res.redirect('/login');
+    return
+  } else {
+    console.log(req.session);
+    console.log(req.sessionID);
+  }
   var addtolist = req.body.inputtodo; //Gets the text in the input tag with name ="inputtodo"
   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
       if (err){
@@ -55,21 +98,15 @@ app.post("/", function (req, res) {
 });
 
 
-//LOGIN PAGE BELOW
-app.post("/login", function (req, res) {
-  var usernamething = req.body.username;
-  const UserFile = require("./users.js");//This requires another file
-  UserFile.find(usernamething);//this uses that other file's ".find"
-  if (UserFile.find(usernamething) === undefined){
-    res.redirect('/login');//reloads page
-  } else if (UserFile.find(usernamething) !== undefined){
-    res.redirect('/');//reloads page
-  }
-});
-
-
 //This is dynamic, meaning any time i click a button that is not "/", this will fire
 app.post("/complete:dynamic", function (req, res) {
+  if (authSession === ""){
+    res.redirect('/login');
+    return
+  } else {
+    console.log(req.session);
+    console.log(req.sessionID);
+  }
   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
