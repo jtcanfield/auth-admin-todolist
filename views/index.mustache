@@ -20,7 +20,7 @@
     </form>
     <h2>To Do:</h2>
     {{#todosMustache}}
-      <form id={{.}} action="/{{.}}" method="post">
+      <form id={{.}} action="/complete{{.}}" method="post">
         <span>{{.}}</span><button type="submit">Finish</button>
       </form>
     {{/todosMustache}}

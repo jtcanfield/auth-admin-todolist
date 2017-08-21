@@ -54,6 +54,8 @@ app.post("/", function (req, res) {
   res.redirect('/');//reloads page
 });
 
+
+//LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
   var usernamething = req.body.username;
   const UserFile = require("./users.js");//This requires another file
@@ -67,7 +69,7 @@ app.post("/login", function (req, res) {
 
 
 //This is dynamic, meaning any time i click a button that is not "/", this will fire
-app.post("/:dynamic", function (req, res) {
+app.post("/complete:dynamic", function (req, res) {
   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
