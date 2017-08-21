@@ -1,0 +1,6 @@
+input[type=checkbox]:checked + label.strikethrough{
+  text-decoration: line-through;
+}
+html {
+  text-align: center;
+}
