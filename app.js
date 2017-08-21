@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const file = './data.json';
 const fs = require('fs');
+const session = require('express-session');
 
 
-const AdminRouter = require ("./routes/admin.js");
-app.use("/admin", AdminRouter);
+const adminRouter = require ("./routes/admin");
+app.use("/admin", adminRouter);
 
 const UserFile = require("./users.js");//This requires another file
 UserFile.find("blaaa");//this uses that other file's ".find"
