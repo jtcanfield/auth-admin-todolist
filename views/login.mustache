@@ -14,21 +14,11 @@
  	</head>
  	<body>
     <h1>THIS IS THE LOGIN PAGE</h1>
-    <form action="/" method="post">
-      <p>Add to the list by typing below:</p>
-      <input type="text" name="inputtodo"/>
+    <form action="/login" method="post">
+      <p>See if your username exists:</p>
+      <input type="text" name="username"/>
       <button type="submit">Submit</button>
     </form>
-    <h2>To Do:</h2>
-    {{#todosMustache}}
-      <form id={{.}} action="/{{.}}" method="post">
-        <span>{{.}}</span><button type="submit">Finish</button>
-      </form>
-    {{/todosMustache}}
-    <h2>Done:</h2>
-    {{#doneMustache}}
-      <p>{{.}}</p>
-    {{/doneMustache}}
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>
