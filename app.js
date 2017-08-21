@@ -15,7 +15,9 @@ app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, htt
 
 
 
-// console.log();
+
+
+
 const loginRouter = require ("./routes/login");//Requires a file
 app.use("/login", loginRouter);//assigns the required file to a route
 
@@ -41,14 +43,14 @@ app.post("/login", function (req, res) {
   if (UserFile.find(usernamething) === undefined){
     res.redirect('/login');//reloads page
   } else if (UserFile.find(usernamething) !== undefined){
-    authSession = true;
+    authSession = usernamething;
     res.redirect('/');//reloads page
   }
 });
 
 app.post("/logout", function (req, res) {
   authSession = "";
-  res.redirect('/');//reloads page
+  res.redirect('/login');
 });
 
 
@@ -59,6 +61,7 @@ app.get("/", function (req, res) {
     res.redirect('/login');
     return
   } else {
+    console.log(authSession);
     console.log(req.session);
     console.log(req.sessionID);
   }
@@ -83,6 +86,7 @@ app.post("/", function (req, res) {
     res.redirect('/login');
     return
   } else {
+    console.log(authSession);
     console.log(req.session);
     console.log(req.sessionID);
   }
