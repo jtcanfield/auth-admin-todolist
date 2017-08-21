@@ -1,8 +1,13 @@
-
+const users = [
+  {username: "jtdude100", email: "jonathantcanfield@gmail.com"},
+  {username: "wtfpeople", email: "wtfpeople@fakeemail.com"}
+]
 
 
 function getUser(username){
-  return console.log(username + " Is a thing");
+  return users.find(function (user) {
+    return user.username == username
+  });
 }
 
 module.exports = {

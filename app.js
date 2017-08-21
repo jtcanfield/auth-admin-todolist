@@ -7,18 +7,9 @@ const file = './data.json';
 const fs = require('fs');
 const session = require('express-session');
 
-// Lets not do the admin thing right now
-// const adminRouter = require ("./routes/admin");//Requires a file
-// app.use("/admin", adminRouter);//assigns the required file to a route
-
 
 const loginRouter = require ("./routes/login");//Requires a file
 app.use("/login", loginRouter);//assigns the required file to a route
-
-
-
-// const UserFile = require("./users.js");//This requires another file
-// UserFile.find("blaaa");//this uses that other file's ".find"
 
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
@@ -67,7 +58,11 @@ app.post("/login", function (req, res) {
   var usernamething = req.body.username;
   const UserFile = require("./users.js");//This requires another file
   UserFile.find(usernamething);//this uses that other file's ".find"
-  res.redirect('/login');//reloads page
+  if (UserFile.find(usernamething) === undefined){
+    res.redirect('/login');//reloads page
+  } else if (UserFile.find(usernamething) !== undefined){
+    res.redirect('/');//reloads page
+  }
 });
 
 
