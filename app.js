@@ -36,9 +36,12 @@ app.use(bodyParser.text());
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
   // console.log(req);
+  console.log("SESSION STORE: ");
   console.log(req.sessionStore);
+  console.log("SESSIONS: ");
   console.log(req.sessionStore.sessions);
   // console.log(req.session);
+  console.log("SESSION ID: ")
   console.log(req.sessionID);
   var now = new Date();
   console.log(now);
