@@ -35,27 +35,33 @@ app.use(bodyParser.text());
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
-  console.log(req.login);
+  // console.log(req.login);
   // console.log("SESSION STORE: ");
   // console.log(req.sessionStore);
-  // console.log("SESSIONS: ");
-  // console.log(req.sessionStore.sessions);
+  // console.log("SESSIONS: "); //USEFUL DATA
+  // console.log(req.sessionStore.sessions); //USEFUL DATA
   // console.log("SESSION ID: ")
   // console.log(req.sessionID);
   // console.log(req.sessionID.login);
   // var now = new Date();
   // console.log(now);
-  var usernamething = req.body.username;
+  var username = req.body.username;
+  var password = req.body.password;
   const UserFile = require("./users.js");//This requires another file
-  UserFile.find(usernamething);//this uses that other file's ".find"
-  if (UserFile.find(usernamething) === undefined){
+  var user = UserFile.find(username);//this uses that other file's ".find"
+  if (UserFile.find(username) === undefined){
     res.redirect('/login');//reloads page
-  } else if (UserFile.find(usernamething) !== undefined){
-    authSession = usernamething;
-    req.login = usernamething;
-    console.log(req.sessionID);
-    console.log(req.login);
-    res.redirect('/');//reloads page
+  } else if (UserFile.find(username) !== undefined){
+    if (user.password === password){
+      console.log(user.password);
+      authSession = username;
+      req.login = username;
+      // console.log(req.sessionID);
+      // console.log(req.login);
+      res.redirect('/');
+    } else {
+      res.redirect('/login');//reloads page
+    }
   }
 });
 

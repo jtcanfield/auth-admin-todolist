@@ -1,6 +1,6 @@
 const users = [
-  {username: "jtdude100", email: "jonathantcanfield@gmail.com"},
-  {username: "wtfpeople", email: "wtfpeople@fakeemail.com"}
+  {username: "jtdude100", password: "jtcjtc", email: "jonathantcanfield@gmail.com"},
+  {username: "wtfpeople", password: "wtf3000", email: "wtfpeople@fakeemail.com"}
 ]
 
 

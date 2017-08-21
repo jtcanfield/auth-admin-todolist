@@ -15,10 +15,17 @@
  	<body>
     <h1>THIS IS THE LOGIN PAGE</h1>
     <form action="/login" method="post">
-      <p>See if your username exists:</p>
+      <p>Login Username:</p>
       <input type="text" name="username"/>
-      <button type="submit">Submit</button>
-      <p>{{status}}</p>
+      <p>Login Password:</p>
+      <input type="text" name="password"/>
+      <button type="submit">Login</button>
+    </form>
+    <form action="/signup" method="post">
+      <p>Signup!</p>
+      <p>Username:</p>
+      <input type="text" name="username"/>
+      <button type="submit">Sign Up</button>
     </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
