@@ -8,6 +8,10 @@ const fs = require('fs');
 var authSession = "";
 
 
+//Allows saving to a "scratch" folder, will be created apon logging in
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
+
 
 
 const session = require('express-session');
@@ -38,11 +42,15 @@ app.use(bodyParser.text());
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
-  // console.log(req.login);
   // console.log("SESSION STORE: ");
   // console.log(req.sessionStore);
   // console.log("SESSIONS: "); //USEFUL DATA
-  // console.log(req.sessionStore.sessions); //USEFUL DATA
+  // console.log(req.sessionStore.sessions);//USEFUL DATA
+  var sessionCookie = req.sessionStore.sessions[req.sessionID];
+  console.log(sessionCookie);
+  cook = JSON.parse(sessionCookie);
+  console.log(cook.cookie);
+  // console.log(sessionCookie); //USEFUL DATA
   // console.log("SESSION ID: ")
   // console.log(req.sessionID);
   // console.log(req.sessionID.login);
@@ -58,9 +66,9 @@ app.post("/login", function (req, res) {
     if (user.password === password){
       console.log(user.password);
       authSession = username;
-      req.login = username;
-      // console.log(req.sessionID);
-      // console.log(req.login);
+      localStorage.setItem("username", username);
+      cook.cookie.username = username;
+      console.log(cook.cookie.username);
       res.redirect('/');
     } else {
       res.redirect('/login');//reloads page
@@ -82,6 +90,10 @@ app.post("/signuppageredirect", function (req, res) {
 
 //This is the initial rendering, saying to use index.mustache, and declares todosMustache
 app.get("/", function (req, res) {
+  var sessionCookie = req.sessionStore.sessions[req.sessionID];
+  cook = JSON.parse(sessionCookie);
+  console.log(cook.cookie.username);
+  // console.log(localStorage.getItem("username"));
   if (authSession === ""){
     res.redirect('/login');
     return
