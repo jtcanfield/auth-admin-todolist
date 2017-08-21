@@ -83,7 +83,7 @@ app.get("/", function (req, res) {
       var todoarray = obj.todoArray; //declares makes the todoarray
       var donearray = obj.doneArray; //declares makes the donearray
       // this makes todosMustache the todoarray var
-      res.render('index', { todosMustache: todoarray,  doneMustache: donearray});
+      res.render('index', { todosMustache: todoarray,  doneMustache: donearray, username: authSession});
   }});
   // This will make todosMustache the todosArray
   // res.render('index', { todosMustache: todosArray });
