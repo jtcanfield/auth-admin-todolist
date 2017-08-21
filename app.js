@@ -35,9 +35,13 @@ app.use(bodyParser.text());
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
-  console.log(req);
-  console.log(req.session);
+  // console.log(req);
+  console.log(req.sessionStore);
+  console.log(req.sessionStore.sessions);
+  // console.log(req.session);
   console.log(req.sessionID);
+  var now = new Date();
+  console.log(now);
   var usernamething = req.body.username;
   const UserFile = require("./users.js");//This requires another file
   UserFile.find(usernamething);//this uses that other file's ".find"
