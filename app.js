@@ -41,13 +41,15 @@ app.post("/login", function (req, res) {
   if (UserFile.find(usernamething) === undefined){
     res.redirect('/login');//reloads page
   } else if (UserFile.find(usernamething) !== undefined){
-    // var authed = req.sessionID
     authSession = true;
     res.redirect('/');//reloads page
   }
 });
 
-
+app.post("/logout", function (req, res) {
+  authSession = "";
+  res.redirect('/');//reloads page
+});
 
 
 
