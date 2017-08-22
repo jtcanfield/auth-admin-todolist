@@ -11,5 +11,6 @@ function getUser(username){
 }
 
 module.exports = {
-  find: getUser
+  find: getUser,
+  getUser: getUser
 }
