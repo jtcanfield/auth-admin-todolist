@@ -69,7 +69,7 @@ app.post("/login", function (req, res) {
   const UserFile = require("./users.js");//This requires another file
   var user = UserFile.find(username);//this uses that other file's ".find"
   if (UserFile.find(username) === undefined){
-    status = "incorrect";
+    status = "Incorrect Username or Password";
     res.render('login', { status: status});//reloads page
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
@@ -80,7 +80,7 @@ app.post("/login", function (req, res) {
       console.log(cook.cookie.username);
       res.redirect('/');
     } else {
-      status = "incorrect";
+      status = "Incorrect Username or Password";
       res.render('login', { status: status});//reloads page
     }
   }
