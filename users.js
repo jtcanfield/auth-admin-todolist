@@ -6,7 +6,7 @@ const users = [
 
 function getUser(username){
   return users.find(function (user) {
-    return user.username == username
+    return user.username == username;
   });
 }
 
