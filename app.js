@@ -6,6 +6,7 @@ const app = express();
 const file = './data.json';
 const fs = require('fs');
 var authSession = "";
+var status = "";
 
 
 //Allows saving to a "scratch" folder, will be created apon logging in
@@ -61,7 +62,8 @@ app.post("/login", function (req, res) {
   const UserFile = require("./users.js");//This requires another file
   var user = UserFile.find(username);//this uses that other file's ".find"
   if (UserFile.find(username) === undefined){
-    res.redirect('/login');//reloads page
+    status = "incorrect";
+    res.render('login', { status: status});//reloads page
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
       console.log(user.password);
@@ -71,7 +73,8 @@ app.post("/login", function (req, res) {
       console.log(cook.cookie.username);
       res.redirect('/');
     } else {
-      res.redirect('/login');//reloads page
+      status = "incorrect";
+      res.render('login', { status: status});//reloads page
     }
   }
 });
@@ -95,7 +98,8 @@ app.get("/", function (req, res) {
   console.log(cook.cookie.username);
   // console.log(localStorage.getItem("username"));
   if (authSession === ""){
-    res.redirect('/login');
+    status = "";
+    res.redirect('login');
     return
   } else {
   }
@@ -117,7 +121,8 @@ app.get("/", function (req, res) {
 //This means that every time method="post" is called on action="/", it will add to the array and redirect the user
 app.post("/", function (req, res) {
   if (authSession === ""){
-    res.redirect('/login');
+    status = "";
+    res.redirect('login');
     return
   } else {
   }
@@ -138,7 +143,8 @@ app.post("/", function (req, res) {
 //This is dynamic, meaning any time i click a button that is not "/", this will fire
 app.post("/complete:dynamic", function (req, res) {
   if (authSession === ""){
-    res.redirect('/login');
+    status = "";
+    res.redirect('login');
     return
   } else {
   }
