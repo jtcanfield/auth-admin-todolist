@@ -55,9 +55,9 @@ app.post("/login", function (req, res) {
   // console.log("SESSIONS: "); //USEFUL DATA
   // console.log(req.sessionStore.sessions);//USEFUL DATA
   var sessionCookie = req.sessionStore.sessions[req.sessionID];
-  console.log(sessionCookie);
-  cook = JSON.parse(sessionCookie);
-  console.log(cook.cookie);
+    // console.log(sessionCookie);
+    // cook = JSON.parse(sessionCookie);
+    // console.log(cook.cookie);
   // console.log(sessionCookie); //USEFUL DATA
   // console.log("SESSION ID: ")
   // console.log(req.sessionID);
@@ -73,11 +73,11 @@ app.post("/login", function (req, res) {
     res.render('login', { status: status});//reloads page
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
-      console.log(user.password);
+      // console.log(user.password);
       authSession = username;
       localStorage.setItem("username", username);
-      cook.cookie.username = username;
-      console.log(cook.cookie.username);
+      // cook.cookie.username = username;
+      // console.log(cook.cookie.username);
       res.redirect('/');
     } else {
       status = "Incorrect Username or Password";
@@ -100,9 +100,9 @@ app.post("/signuppageredirect", function (req, res) {
 
 //This is the initial rendering, saying to use index.mustache, and declares todosMustache
 app.get("/", function (req, res) {
-  var sessionCookie = req.sessionStore.sessions[req.sessionID];
-  cook = JSON.parse(sessionCookie);
-  console.log(cook.cookie.username);
+    // var sessionCookie = req.sessionStore.sessions[req.sessionID];
+    // cook = JSON.parse(sessionCookie);
+    // console.log(cook.cookie.username);
   // console.log(localStorage.getItem("username"));
   if (authSession === ""){
     status = "";
