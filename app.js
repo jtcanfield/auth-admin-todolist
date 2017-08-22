@@ -23,8 +23,8 @@ app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, htt
 
 
 
-const loginRouter = require ("./routes/login");//Requires a file
-app.use("/login", loginRouter);//assigns the required file to a route
+// const loginRouter = require ("./routes/login");//Requires a file
+// app.use("/login", loginRouter);//assigns the required file to a route
 
 const signupRouter = require ("./routes/signup");//Requires a file
 app.use("/signup", signupRouter);//assigns the required file to a route
@@ -40,6 +40,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 
 
+app.get("/login", function (req, res) {
+  res.render('login');//reloads page
+});
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
