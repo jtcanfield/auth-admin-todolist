@@ -177,6 +177,33 @@ app.post("/complete:dynamic", function (req, res) {
 });
 
 
+app.post("/signupform", function (req, res) {
+  console.log(req.body.username);
+  console.log(req.body.password1);
+  console.log(req.body.password2);
+  console.log(req.body.email);
+  // fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+  //     if (err){
+  //         console.log(err);
+  //     } else {
+  //     obj = JSON.parse(data); //now its an object
+  //       // iterate over each element in the array
+  //       for (var i = 0; i < obj.todoArray.length; i++){
+  //       // look for the entry with a matching value
+  //         if (obj.todoArray[i] === req.params.dynamic){//req.params.dynamic finds the value of dynamic
+  //           var change = obj.todoArray[i]; //this sets change to the string to delete
+  //           console.log("I am deleting " + change);//logs the string to delete
+  //           obj.doneArray.push(change);//pushes the string to delete to the done array
+  //           obj.todoArray.splice(i, 1);//splices the string from the to do array
+  //         }
+  //       }
+  //     json = JSON.stringify(obj); //converts back to json
+  //     fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
+  // }});
+  // res.redirect('/');//reloads page
+});
+
+
 app.listen(3000, function () {
   console.log('Hosted on local:3000');
 })
