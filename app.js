@@ -190,16 +190,10 @@ app.post("/signupsubmit", function (req, res) {
     res.render('signup', {status:"Passwords do not match"});
     return
   }
-  res.render('signup');
-  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
-      if (err){
-          console.log(err);
-      } else {
-      obj = JSON.parse(data); //now its an object
-      console.log('obj');
-      // json = JSON.stringify(obj); //converts back to json
-      // fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
-  }});
+  const UserFile = require("./users.js");
+  UserFile.users.map((o) =>{
+    console.log(o.username);
+  });
   // res.redirect('/');//reloads page
 });
 app.get("/signupsubmit", function (req, res) {
