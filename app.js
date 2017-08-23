@@ -6,7 +6,6 @@ const app = express();
 const file = './data.json';
 const fs = require('fs');
 var authSession = "";
-var status = "";
 
 
 //Allows saving to a "scratch" folder, will be created apon logging in
@@ -69,8 +68,7 @@ app.post("/login", function (req, res) {
   const UserFile = require("./users.js");//This requires another file
   var user = UserFile.find(username);//this uses that other file's ".find"
   if (UserFile.find(username) === undefined){
-    status = "Incorrect Username or Password";
-    res.render('login', { status: status});//reloads page
+    res.render('login', { status: "Incorrect Username or Password"});//reloads page
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
       // console.log(user.password);
@@ -80,8 +78,7 @@ app.post("/login", function (req, res) {
       // console.log(cook.cookie.username);
       res.redirect('/');
     } else {
-      status = "Incorrect Username or Password";
-      res.render('login', { status: status});//reloads page
+      res.render('login', { status: "Incorrect Username or Password"});//reloads page
     }
   }
 });
@@ -105,7 +102,6 @@ app.get("/", function (req, res) {
     // console.log(cook.cookie.username);
   // console.log(localStorage.getItem("username"));
   if (authSession === ""){
-    status = "";
     res.redirect('login');
     return
   } else {
@@ -128,7 +124,6 @@ app.get("/", function (req, res) {
 //This means that every time method="post" is called on action="/", it will add to the array and redirect the user
 app.post("/", function (req, res) {
   if (authSession === ""){
-    status = "";
     res.redirect('login');
     return
   } else {
@@ -150,7 +145,6 @@ app.post("/", function (req, res) {
 //This is dynamic, meaning any time i click a button that is not "/", this will fire
 app.post("/complete:dynamic", function (req, res) {
   if (authSession === ""){
-    status = "";
     res.redirect('login');
     return
   } else {
@@ -177,14 +171,23 @@ app.post("/complete:dynamic", function (req, res) {
 });
 
 
+app.get("/signup", function (req, res) {
+  res.render('signup');
+});
+
 app.post("/signup", function (req, res) {
-  if (req.body.username === "" || req.body.password1 === "" || req.body.password2 === "" || req.body.email === ""){
-    res.render('signup');
-  }
   console.log(req.body.username);
   console.log(req.body.password1);
   console.log(req.body.password2);
   console.log(req.body.email);
+  if (req.body.username === "" & req.body.password1 === "" & req.body.password2 === "" & req.body.email === ""){
+    res.render('signup', { status: "Cannot Submit an empty page"});
+    return
+  }
+  if (req.body.password1 !== req.body.password2){
+    res.render('signup', { status: "Passwords do not match"});
+    return
+  }
   res.render('signup');
   // fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
   //     if (err){
