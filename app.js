@@ -215,7 +215,7 @@ app.post("/signupsubmit", function (req, res) {
     return
   }
   const UserFile = require("./users.js");
-  UserFile.users.map((x) =>{
+  UserFile.userFunctionExport.users.map((x) =>{
     var usernamestring = x.username;
     var emailstring = x.email;
     if (usernamestring.toLowerCase() === req.body.username.toLowerCase()){
@@ -230,6 +230,9 @@ app.post("/signupsubmit", function (req, res) {
     }
   });
   if (validform === false){return};
+  if (validform === true){
+    UserFile.addUser({username: req.body.username, password: req.body.password2, email: req.body.email});
+  }
   // res.redirect('/');//reloads page
 });
 
