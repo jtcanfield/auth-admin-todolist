@@ -7,20 +7,12 @@ const file = './data.json';
 const fs = require('fs');
 var authSession = "";
 
-
 //Allows saving to a "scratch" folder, will be created apon logging in
-var LocalStorage = require('node-localstorage').LocalStorage,
-localStorage = new LocalStorage('./scratch');
-
-
+// var LocalStorage = require('node-localstorage').LocalStorage,
+// localStorage = new LocalStorage('./scratch');
 
 const session = require('express-session');
 app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}}));
-
-
-
-
-
 
 // const loginRouter = require ("./routes/login");//Requires a file
 // app.use("/login", loginRouter);//assigns the required file to a route
@@ -59,7 +51,7 @@ app.post("/login", function (req, res) {
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
       authSession = username;
-      localStorage.setItem("username", username);
+      // localStorage.setItem("username", username);
       res.redirect('/');
     } else {
       res.render('login', { status: "Incorrect Username or Password"});//reloads page
@@ -234,7 +226,7 @@ app.post("/signupsubmit", function (req, res) {
     UserFile.addUser({username: req.body.username, password: req.body.password2, email: req.body.email});
   }
   authSession = req.body.username;
-  localStorage.setItem("username", req.body.username);
+  // localStorage.setItem("username", req.body.username);
   res.redirect('/');
 });
 

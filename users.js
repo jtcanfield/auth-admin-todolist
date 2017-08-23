@@ -8,24 +8,28 @@ const bodyParser = require('body-parser');
 const file = './data.json';
 const fs = require('fs');
 
-
 function getUser(username){
   return userJsonFile.users.find(function (user) {
     return user.username == username;
   });
 }
 
-function addUser(newuser){
+function addUser(newuserdata){
   fs.readFile('users.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
-      obj = JSON.parse(data); //now its an object
-      obj.users.push(newuser);
-      json = JSON.stringify(obj); //converts back to json
-      fs.writeFile('users.json', json, 'utf8'); // writes to file
+      obj = JSON.parse(data);
+      obj.users.push(newuserdata);
+      json = JSON.stringify(obj);
+      fs.writeFile('users.json', json, 'utf8');
   }});
-  fs.writeFile(newuser.username+'data.json', {"todoArray":["You can click finish when you are done","Wash Car"],"doneArray":["You Can delete items down here","Call Doctor"]}, 'utf8');
+  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log(err);
+      } else {
+      fs.writeFile(newuserdata.username+'data.json', data, 'utf8');
+  }});
   return
 }
 
