@@ -183,7 +183,7 @@ app.post("/signupsubmit", function (req, res) {
   console.log(req.body.password2);
   console.log(req.body.email);
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
-    res.render('signup' {status:"One field is undefined, please try again using valid characters."});
+    res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
   }
   if (req.body.password1 !== req.body.password2){
