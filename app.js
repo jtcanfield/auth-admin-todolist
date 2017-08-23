@@ -178,7 +178,7 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/signupsubmit", function (req, res) {
-  console.log(req.body.username);
+  console.log(req.body.username.length);
   console.log(req.body.password1);
   console.log(req.body.password2);
   console.log(req.body.email);
@@ -186,8 +186,16 @@ app.post("/signupsubmit", function (req, res) {
     res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
   }
+  if (req.body.password1 < 4){
+    res.render('signup', {status:"Password must have at least 4 characters"});
+    return
+  }
   if (req.body.password1 !== req.body.password2){
     res.render('signup', {status:"Passwords do not match"});
+    return
+  }
+  if (req.body.username < 4){
+    res.render('signup', {status:"Username must have at least 4 characters"});
     return
   }
   const UserFile = require("./users.js");
