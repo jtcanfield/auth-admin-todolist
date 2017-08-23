@@ -10,7 +10,7 @@ const fs = require('fs');
 
 function getUser(username){
   return userJsonFile.users.find(function (user) {
-    return user.username == username;
+    return user.username.toLowerCase() == username.toLowerCase();
   });
 }
 
