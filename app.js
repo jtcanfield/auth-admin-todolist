@@ -178,6 +178,9 @@ app.post("/complete:dynamic", function (req, res) {
 
 
 app.post("/signup", function (req, res) {
+  if (req.body.username === "" || req.body.password1 === "" || req.body.password2 === "" || req.body.email === ""){
+    res.render('signup');
+  }
   console.log(req.body.username);
   console.log(req.body.password1);
   console.log(req.body.password2);
