@@ -177,11 +177,12 @@ app.post("/complete:dynamic", function (req, res) {
 });
 
 
-app.post("/signupform", function (req, res) {
+app.post("/signup", function (req, res) {
   console.log(req.body.username);
   console.log(req.body.password1);
   console.log(req.body.password2);
   console.log(req.body.email);
+  res.render('signup');
   // fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
   //     if (err){
   //         console.log(err);
