@@ -182,33 +182,24 @@ app.post("/signupsubmit", function (req, res) {
   console.log(req.body.password1);
   console.log(req.body.password2);
   console.log(req.body.email);
-  // if (req.body.username === "" & req.body.password1 === "" & req.body.password2 === "" & req.body.email === ""){
-  //   res.render('signup');
-  //   return
-  // }
+  if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
+    res.render('signup' {status:"One field is undefined, please try again using valid characters."});
+    return
+  }
   if (req.body.password1 !== req.body.password2){
     res.render('signup', {status:"Passwords do not match"});
     return
   }
   res.render('signup');
-  // fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
-  //     if (err){
-  //         console.log(err);
-  //     } else {
-  //     obj = JSON.parse(data); //now its an object
-  //       // iterate over each element in the array
-  //       for (var i = 0; i < obj.todoArray.length; i++){
-  //       // look for the entry with a matching value
-  //         if (obj.todoArray[i] === req.params.dynamic){//req.params.dynamic finds the value of dynamic
-  //           var change = obj.todoArray[i]; //this sets change to the string to delete
-  //           console.log("I am deleting " + change);//logs the string to delete
-  //           obj.doneArray.push(change);//pushes the string to delete to the done array
-  //           obj.todoArray.splice(i, 1);//splices the string from the to do array
-  //         }
-  //       }
-  //     json = JSON.stringify(obj); //converts back to json
-  //     fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
-  // }});
+  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log(err);
+      } else {
+      obj = JSON.parse(data); //now its an object
+      console.log('obj');
+      // json = JSON.stringify(obj); //converts back to json
+      // fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
+  }});
   // res.redirect('/');//reloads page
 });
 app.get("/signupsubmit", function (req, res) {
