@@ -176,6 +176,9 @@ app.get("/signup", function (req, res) {
 app.post("/signup", function (req, res) {
   res.redirect('signup');
 });
+app.get("/signupsubmit", function (req, res) {
+  res.redirect('signup');
+});
 
 app.post("/signupsubmit", function (req, res) {
   var validform = true;
@@ -200,22 +203,22 @@ app.post("/signupsubmit", function (req, res) {
     return
   }
   const UserFile = require("./users.js");
-  UserFile.users.map((o) =>{
-    var mapstring = o.username;
-    if (mapstring.toLowerCase() === req.body.username.toLowerCase()){
-      console.log("SHOULD STOP HERE");
+  UserFile.users.map((x) =>{
+    var usernamestring = x.username;
+    var emailstring = x.email;
+    if (usernamestring.toLowerCase() === req.body.username.toLowerCase()){
       res.render('signup', {status:"Username already exists, choose another user name"});
       validform = false;
       return
     }
+    if (emailstring.toLowerCase() === req.body.email.toLowerCase()){
+      res.render('signup', {status:"Email already exists. Lost your Username or Password? Email me!"});
+      validform = false;
+      return
+    }
   });
-  if (validform === false){
-    return
-  }
+  if (validform === false){return};
   // res.redirect('/');//reloads page
-});
-app.get("/signupsubmit", function (req, res) {
-  res.redirect('signup');
 });
 
 app.listen(3000, function () {
