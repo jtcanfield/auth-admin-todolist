@@ -49,6 +49,9 @@ app.get("/signup", function (req, res) {
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
+  console.log(req.body);
+  console.log(req.session);
+  console.log(req.body.username);
   // console.log("SESSION STORE: ");
   // console.log(req.sessionStore);
   // console.log("SESSIONS: "); //USEFUL DATA
@@ -157,9 +160,9 @@ app.post("/complete:dynamic", function (req, res) {
         // iterate over each element in the array
         for (var i = 0; i < obj.todoArray.length; i++){
         // look for the entry with a matching value
-          if (obj.todoArray[i] === req.params.dynamic){//req.params.dynamic finds the value of dynamic
+          if (obj.todoArray[i] === req.params.dynamic){//req.params.dynamic finds the value of :dynamic
             var change = obj.todoArray[i]; //this sets change to the string to delete
-            console.log("I am deleting " + change);//logs the string to delete
+            console.log("I am moving " + change);//logs the string to delete
             obj.doneArray.push(change);//pushes the string to delete to the done array
             obj.todoArray.splice(i, 1);//splices the string from the to do array
           }
@@ -169,6 +172,34 @@ app.post("/complete:dynamic", function (req, res) {
   }});
   res.redirect('/');//reloads page
 });
+
+//This is the dynamic delete
+app.post("/delete:dynamic", function (req, res) {
+  if (authSession === ""){
+    res.redirect('login');
+    return
+  } else {
+  }
+  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log(err);
+      } else {
+      obj = JSON.parse(data); //now its an object
+        // iterate over each element in the array
+        for (var i = 0; i < obj.doneArray.length; i++){
+        // look for the entry with a matching value
+          if (obj.doneArray[i] === req.params.dynamic){//req.params.dynamic finds the value of :dynamic
+            var delfromarray = obj.doneArray[i]; //this sets change to the string to delete
+            console.log("I am deleting " + delfromarray);//logs the string to delete
+            obj.doneArray.splice(i, 1);//splices the string from the to do array
+          }
+        }
+      json = JSON.stringify(obj); //converts back to json
+      fs.writeFile(authSession+'data.json', json, 'utf8'); // writes to file
+  }});
+  res.redirect('/');//reloads page
+});
+
 
 app.get("/signup", function (req, res) {
   res.redirect('signup');

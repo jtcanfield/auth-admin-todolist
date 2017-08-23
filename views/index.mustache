@@ -27,7 +27,9 @@
     {{/todosMustache}}
     <h2>Done:</h2>
     {{#doneMustache}}
-      <p>{{.}}</p>
+      <form id={{.}} action="/delete{{.}}" method="post">
+        <span>{{.}}</span><button type="submit">Delete</button>
+      </form>
     {{/doneMustache}}
     <br><br><br>
     <form action="/logout" method="post">
