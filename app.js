@@ -49,23 +49,7 @@ app.get("/signup", function (req, res) {
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
-  console.log(req.body);
-  console.log(req.session);
-  console.log(req.body.username);
-  // console.log("SESSION STORE: ");
-  // console.log(req.sessionStore);
-  // console.log("SESSIONS: "); //USEFUL DATA
-  // console.log(req.sessionStore.sessions);//USEFUL DATA
   var sessionCookie = req.sessionStore.sessions[req.sessionID];
-    // console.log(sessionCookie);
-    // cook = JSON.parse(sessionCookie);
-    // console.log(cook.cookie);
-  // console.log(sessionCookie); //USEFUL DATA
-  // console.log("SESSION ID: ")
-  // console.log(req.sessionID);
-  // console.log(req.sessionID.login);
-  // var now = new Date();
-  // console.log(now);
   var username = req.body.username;
   var password = req.body.password;
   const UserFile = require("./users.js");//This requires another file
@@ -74,11 +58,8 @@ app.post("/login", function (req, res) {
     res.render('login', { status: "Incorrect Username or Password"});//reloads page
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
-      // console.log(user.password);
       authSession = username;
       localStorage.setItem("username", username);
-      // cook.cookie.username = username;
-      // console.log(cook.cookie.username);
       res.redirect('/');
     } else {
       res.render('login', { status: "Incorrect Username or Password"});//reloads page
