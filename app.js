@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const file = './data.json';
 const fs = require('fs');
-app.set('trust proxy', 1)
 var authSession = "";
 
 const session = require('express-session');
