@@ -233,7 +233,9 @@ app.post("/signupsubmit", function (req, res) {
   if (validform === true){
     UserFile.addUser({username: req.body.username, password: req.body.password2, email: req.body.email});
   }
-  // res.redirect('/');//reloads page
+  authSession = req.body.username;
+  localStorage.setItem("username", req.body.username);
+  res.redirect('/');
 });
 
 app.listen(3000, function () {

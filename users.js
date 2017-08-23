@@ -15,16 +15,17 @@ function getUser(username){
   });
 }
 
-function addUser(obj){
+function addUser(newuser){
   fs.readFile('users.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
       obj = JSON.parse(data); //now its an object
-
+      obj.users.push(newuser);
       json = JSON.stringify(obj); //converts back to json
       fs.writeFile('users.json', json, 'utf8'); // writes to file
   }});
+  fs.writeFile(newuser.username+'data.json', {"todoArray":["You can click finish when you are done","Wash Car"],"doneArray":["You Can delete items down here","Call Doctor"]}, 'utf8');
   return
 }
 
