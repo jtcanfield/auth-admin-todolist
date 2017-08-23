@@ -4,3 +4,6 @@ input[type=checkbox]:checked + label.strikethrough{
 html {
   text-align: center;
 }
+.error{
+  color: red;
+}
