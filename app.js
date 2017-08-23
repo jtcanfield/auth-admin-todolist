@@ -178,6 +178,7 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/signupsubmit", function (req, res) {
+  var validform = true;
   console.log(req.body.username.length);
   console.log(req.body.password1);
   console.log(req.body.password2);
@@ -186,7 +187,7 @@ app.post("/signupsubmit", function (req, res) {
     res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
   }
-  if (req.body.password1 < 4){
+  if (req.body.password1.length < 4){
     res.render('signup', {status:"Password must have at least 4 characters"});
     return
   }
@@ -194,14 +195,23 @@ app.post("/signupsubmit", function (req, res) {
     res.render('signup', {status:"Passwords do not match"});
     return
   }
-  if (req.body.username < 4){
+  if (req.body.username.length < 4){
     res.render('signup', {status:"Username must have at least 4 characters"});
     return
   }
   const UserFile = require("./users.js");
   UserFile.users.map((o) =>{
-    console.log(o.username);
+    var mapstring = o.username;
+    if (mapstring.toLowerCase() === req.body.username.toLowerCase()){
+      console.log("SHOULD STOP HERE");
+      res.render('signup', {status:"Username already exists, choose another user name"});
+      validform = false;
+      return
+    }
   });
+  if (validform === false){
+    return
+  }
   // res.redirect('/');//reloads page
 });
 app.get("/signupsubmit", function (req, res) {
