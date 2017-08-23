@@ -5,14 +5,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const file = './data.json';
 const fs = require('fs');
+app.set('trust proxy', 1)
 var authSession = "";
 
-//Allows saving to a "scratch" folder, will be created apon logging in
-// var LocalStorage = require('node-localstorage').LocalStorage,
-// localStorage = new LocalStorage('./scratch');
-
 const session = require('express-session');
-app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}}));
+var sessionCookie = { secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}};
+app.use(session(sessionCookie));
 
 // const loginRouter = require ("./routes/login");//Requires a file
 // app.use("/login", loginRouter);//assigns the required file to a route
@@ -41,7 +39,7 @@ app.get("/signup", function (req, res) {
 
 //LOGIN PAGE BELOW
 app.post("/login", function (req, res) {
-  var sessionCookie = req.sessionStore.sessions[req.sessionID];
+  // var sessionCookie = req.sessionStore.sessions[req.sessionID];
   var username = req.body.username;
   var password = req.body.password;
   const UserFile = require("./users.js");//This requires another file
@@ -51,7 +49,6 @@ app.post("/login", function (req, res) {
   } else if (UserFile.find(username) !== undefined){
     if (user.password === password){
       authSession = username;
-      // localStorage.setItem("username", username);
       res.redirect('/');
     } else {
       res.render('login', { status: "Incorrect Username or Password"});//reloads page
@@ -61,22 +58,16 @@ app.post("/login", function (req, res) {
 
 app.post("/logout", function (req, res) {
   authSession = "";
-  req.login = undefined;
   res.redirect('/');
 });
 
 app.post("/signuppageredirect", function (req, res) {
   authSession = "";
-  req.login = undefined;
   res.redirect('/signup');
 });
 
 //This is the initial rendering, saying to use index.mustache, and declares todosMustache
 app.get("/", function (req, res) {
-    // var sessionCookie = req.sessionStore.sessions[req.sessionID];
-    // cook = JSON.parse(sessionCookie);
-    // console.log(cook.cookie.username);
-  // console.log(localStorage.getItem("username"));
   if (authSession === ""){
     res.redirect('login');
     return
@@ -186,10 +177,6 @@ app.get("/signupsubmit", function (req, res) {
 
 app.post("/signupsubmit", function (req, res) {
   var validform = true;
-  console.log(req.body.username.length);
-  console.log(req.body.password1);
-  console.log(req.body.password2);
-  console.log(req.body.email);
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
     res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
@@ -226,7 +213,6 @@ app.post("/signupsubmit", function (req, res) {
     UserFile.addUser({username: req.body.username, password: req.body.password2, email: req.body.email});
   }
   authSession = req.body.username;
-  // localStorage.setItem("username", req.body.username);
   res.redirect('/');
 });
 
