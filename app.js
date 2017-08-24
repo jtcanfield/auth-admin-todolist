@@ -73,7 +73,7 @@ app.get("/", function (req, res) {
   } else {
   }
   //fs.readFile reads the data.json file
-  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function (err, data){
       if (err){
           console.log(err);
       } else {
@@ -95,7 +95,7 @@ app.post("/", function (req, res) {
   } else {
   }
   var addtolist = req.body.inputtodo; //Gets the text in the input tag with name ="inputtodo"
-  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function (err, data){
       if (err){
           console.log(err);
       } else {
@@ -115,7 +115,7 @@ app.post("/complete:dynamic", function (req, res) {
     return
   } else {
   }
-  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function (err, data){
       if (err){
           console.log(err);
       } else {
@@ -143,7 +143,7 @@ app.post("/delete:dynamic", function (req, res) {
     return
   } else {
   }
-  fs.readFile(authSession+'data.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile(authSession+'data.json', 'utf8', function (err, data){
       if (err){
           console.log(err);
       } else {
